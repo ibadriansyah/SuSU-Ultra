@@ -2,10 +2,13 @@ use crate::defs::{KSU_MOUNT_SOURCE, NO_MOUNT_PATH, NO_TMPFS_PATH};
 use crate::kpm;
 use crate::module::{handle_updated_modules, prune_modules};
 use crate::{assets, defs, ksucalls, restorecon, utils};
+use crate::{uid_scanner, packages_monitor};
 use anyhow::{Context, Result};
-use log::{info, warn};
+use log::{info, warn, error};
 use rustix::fs::{MountFlags, mount};
 use std::path::Path;
+
+static mut PACKAGES_MONITOR: Option<packages_monitor::PackagesMonitor> = None;
 
 pub fn on_post_data_fs() -> Result<()> {
     ksucalls::report_post_fs_data();
@@ -34,6 +37,25 @@ pub fn on_post_data_fs() -> Result<()> {
     }
 
     assets::ensure_binaries(true).with_context(|| "Failed to extract bin assets")?;
+
+    // Start userspace UID scanning after core initialization
+    info!("Initializing userspace UID scanner");
+    if let Err(e) = uid_scanner::perform_uid_scan_and_submit() {
+        warn!("Initial UID scan failed: {}, kernel will use packages.list fallback", e);
+    }
+    
+    // Start packages monitor
+    match packages_monitor::PackagesMonitor::start() {
+        Ok(monitor) => {
+            unsafe {
+                PACKAGES_MONITOR = Some(monitor);
+            }
+            info!("Packages monitor started successfully");
+        }
+        Err(e) => {
+            warn!("Failed to start packages monitor: {}, UID updates will be limited", e);
+        }
+    }
 
     // tell kernel that we've mount the module, so that it can do some optimization
     ksucalls::report_module_mounted();
@@ -156,6 +178,15 @@ pub fn on_boot_completed() -> Result<()> {
     info!("on_boot_completed triggered!");
 
     run_stage("boot-completed", false);
+
+    // Trigger a rescan after boot completion to catch any late package installations
+    unsafe {
+        if let Some(ref monitor) = PACKAGES_MONITOR {
+            if let Err(e) = monitor.trigger_rescan() {
+                error!("Failed to trigger rescan: {}", e);
+            }
+        }
+    }
 
     Ok(())
 }
