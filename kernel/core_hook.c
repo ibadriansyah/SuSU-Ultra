@@ -432,6 +432,34 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 		return 0;
 	}
 
+	if (arg2 == CMD_UPDATE_UID_LIST) {
+		if (!from_root) {
+			return 0;
+		}
+		
+		struct uid_list_data uid_data;
+		if (copy_from_user(&uid_data, (void __user *)arg3, sizeof(uid_data))) {
+			pr_err("update_uid_list: copy_from_user failed\n");
+			return 0;
+		}
+		
+		if (uid_data.count > KSU_MAX_UID_ENTRIES) {
+			pr_err("update_uid_list: too many entries: %u\n", uid_data.count);
+			return 0;
+		}
+		
+		int ret = ksu_update_uid_list(&uid_data);
+		if (ret == 0) {
+			if (copy_to_user(result, &reply_ok, sizeof(reply_ok))) {
+				pr_err("update_uid_list: prctl reply error\n");
+			}
+			pr_info("Successfully updated UID list with %u entries\n", uid_data.count);
+		} else {
+			pr_err("Failed to update UID list: %d\n", ret);
+		}
+		return 0;
+	}
+
 	// Allow the root manager to configure dynamic manageratures
 	if (arg2 == CMD_DYNAMIC_MANAGER) {
     	if (!from_root && !from_manager) {
@@ -1654,3 +1682,5 @@ void ksu_core_exit(void)
 	// ksu_kprobe_exit();
 #endif
 }
+
+	
