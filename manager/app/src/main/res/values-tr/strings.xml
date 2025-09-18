@@ -219,11 +219,11 @@
     <string name="kpm_control">Yürüt</string>
     <string name="home_kpm_version">KPM Sürümü</string>
     <string name="close_notice">Kapat</string>
-    <string name="kernel_module_notice">Aşağıdaki çekirdek modül işlevleri KernelPatch tarafından geliştirilmiş ve SukiSU Ultra\'nın çekirdek modül işlevlerini içerecek şekilde değiştirilmiştir</string>
-    <string name="home_ContributionCard_kernelsu">SukiSU Ultra bekliyor</string>
+    <string name="kernel_module_notice">Aşağıdaki çekirdek modül işlevleri KernelPatch tarafından geliştirilmiş ve SuSU Ultra\'nın çekirdek modül işlevlerini içerecek şekilde değiştirilmiştir</string>
+    <string name="home_ContributionCard_kernelsu">SuSU Ultra bekliyor</string>
     <string name="kpm_control_success">Başarılı</string>
     <string name="kpm_control_failed">Başarısız</string>
-    <string name="home_click_to_ContributionCard_kernelsu">SukiSU Ultra, gelecekte KSU\'nun nispeten bağımsız bir dalı olacak, ancak yine de resmi KernelSU ve MKSU gibi katkılarından dolayı teşekkür ederiz!</string>
+    <string name="home_click_to_ContributionCard_kernelsu">SuSU Ultra, gelecekte KSU\'nun nispeten bağımsız bir dalı olacak, ancak yine de resmi KernelSU ve MKSU gibi katkılarından dolayı teşekkür ederiz!</string>
     <string name="not_supported">Desteklenmiyor</string>
     <string name="supported">Destekleniyor</string>
     <string name="kernel_patched">Çekirdek yamalanmadı</string>

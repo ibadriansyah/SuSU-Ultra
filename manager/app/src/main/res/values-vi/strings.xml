@@ -6,7 +6,7 @@
     <string name="home_working">Đang hoạt động</string>
     <string name="home_working_version">Phiên bản: %s</string>
     <string name="home_unsupported">Không được hỗ trợ</string>
-    <string name="home_unsupported_reason">Không phát hiện được trình điều khiển SukiSU Ultra trên Kernel của bạn, Kernel sai?</string>
+    <string name="home_unsupported_reason">Không phát hiện được trình điều khiển SuSU Ultra trên Kernel của bạn, Kernel sai?</string>
     <string name="home_kernel">Phiên bản Kernel</string>
     <string name="home_susfs_version">Phiên bản SuSFS</string>
     <string name="home_manager_version">Phiên bản trình quản lý</string>
@@ -60,11 +60,11 @@
     <string name="profile_selinux_context">Bối cảnh SELinux</string>
     <string name="profile_umount_modules">Umount modules</string>
     <string name="failed_to_update_app_profile">Cập nhật Hồ sơ ứng dụng cho %s thất bại</string>
-    <string name="require_kernel_version" formatted="false">Phiên bản SukiSU Ultra hiện tại %s quá thấp để trình quản lý hoạt động bình thường. Vui lòng cập nhật lên phiên bản %s hoặc cao hơn!</string>
+    <string name="require_kernel_version" formatted="false">Phiên bản SuSU Ultra hiện tại %s quá thấp để trình quản lý hoạt động bình thường. Vui lòng cập nhật lên phiên bản %s hoặc cao hơn!</string>
     <string name="settings_umount_modules_default">Umount modules</string>
     <string name="settings_umount_modules_default_summary">Giá trị mặc định chung cho \"Umount modules\" trong Hồ sơ ứng dụng. Nếu được bật, mọi thay đổi hệ thống do các module gây ra sẽ bị gỡ bỏ khỏi hệ thống và các ứng dụng chưa thiết lập hồ sơ</string>
     <string name="settings_susfs_toggle">Vô hiệu hoá kprobes hook</string>
-    <string name="profile_umount_modules_summary">Bật tùy chọn này sẽ cho phép SukiSU Ultra khôi phục mọi file đã được các module sửa đổi trong ứng dụng này</string>
+    <string name="profile_umount_modules_summary">Bật tùy chọn này sẽ cho phép SuSU Ultra khôi phục mọi file đã được các module sửa đổi trong ứng dụng này</string>
     <string name="profile_selinux_domain">Tên miền</string>
     <string name="profile_selinux_rules">Quy tắc</string>
     <string name="module_update">Cập nhật</string>
@@ -117,9 +117,9 @@
     <string name="settings_uninstall_temporary">Gỡ cài đặt tạm thời</string>
     <string name="settings_uninstall_permanent">Gỡ cài đặt sạch</string>
     <string name="settings_restore_stock_image">Khôi phục phân vùng khởi động về mặc định</string>
-    <string name="settings_uninstall_temporary_message">Gỡ cài đặt tạm thời SukiSU Ultra, khôi phục lại trạng thái ban đầu sau lần khởi động lại tiếp theo</string>
-    <string name="settings_uninstall_permanent_message">Gỡ cài đặt SukiSU Ultra (Root và tất cả các module) sạch hoàn toàn, trả về trạng thái ban đầu</string>
-    <string name="settings_restore_stock_image_message">Khôi phục lại boot lúc đầu (Nếu có bản sao lưu), thường được sử dụng trước OTA; nếu bạn cần gỡ hẳn SukiSU Ultra, sử dụng \"Gỡ cài đặt sạch\"</string>
+    <string name="settings_uninstall_temporary_message">Gỡ cài đặt tạm thời SuSU Ultra, khôi phục lại trạng thái ban đầu sau lần khởi động lại tiếp theo</string>
+    <string name="settings_uninstall_permanent_message">Gỡ cài đặt SuSU Ultra (Root và tất cả các module) sạch hoàn toàn, trả về trạng thái ban đầu</string>
+    <string name="settings_restore_stock_image_message">Khôi phục lại boot lúc đầu (Nếu có bản sao lưu), thường được sử dụng trước OTA; nếu bạn cần gỡ hẳn SuSU Ultra, sử dụng \"Gỡ cài đặt sạch\"</string>
     <string name="flashing">Đang Flash...</string>
     <string name="flash_success">Flash thành công</string>
     <string name="flash_failed">Flash thất bại</string>
@@ -219,11 +219,11 @@
     <string name="kpm_control">Tuỳ chỉnh</string>
     <string name="home_kpm_version">Phiên bản KPM</string>
     <string name="close_notice">Đóng</string>
-    <string name="kernel_module_notice">Các chức năng Kernel Module sau đây được KernelPatch phát triển và sửa đổi để tương thích với các chức năng Kernel Module của SukiSU Ultra</string>
-    <string name="home_ContributionCard_kernelsu">Tương lai của SukiSU Ultra</string>
+    <string name="kernel_module_notice">Các chức năng Kernel Module sau đây được KernelPatch phát triển và sửa đổi để tương thích với các chức năng Kernel Module của SuSU Ultra</string>
+    <string name="home_ContributionCard_kernelsu">Tương lai của SuSU Ultra</string>
     <string name="kpm_control_success">Thành công</string>
     <string name="kpm_control_failed">Thất bại</string>
-    <string name="home_click_to_ContributionCard_kernelsu">SukiSU Ultra sẽ là một nhánh tương đối độc lập của KSU trong tương lai, nhưng chúng tôi xin cảm ơn KernelSU và MKSU,... vì những đóng góp của họ!</string>
+    <string name="home_click_to_ContributionCard_kernelsu">SuSU Ultra sẽ là một nhánh tương đối độc lập của KSU trong tương lai, nhưng chúng tôi xin cảm ơn KernelSU và MKSU,... vì những đóng góp của họ!</string>
     <string name="not_supported">Không được hỗ trợ</string>
     <string name="supported">Được hỗ trợ</string>
     <string name="kernel_patched">Kernel chưa được vá</string>
@@ -238,7 +238,7 @@
     <string name="invalid_file_type">Loại file không đúng! Vui lòng chọn file .kpm</string>
     <string name="confirm_uninstall_title_with_filename">Gỡ cài đặt</string>
     <string name="confirm_uninstall_content">KPM sau đây sẽ được gỡ cài đặt: %s</string>
-    <string name="settings_susfs_toggle_summary">Vô hiệu hoá kprobes hook được tạo bởi SukiSU Ultra, thay vào đó sử dụng inlines hook, tương tự như phương pháp hook của Kernel non-GKI</string>
+    <string name="settings_susfs_toggle_summary">Vô hiệu hoá kprobes hook được tạo bởi SuSU Ultra, thay vào đó sử dụng inlines hook, tương tự như phương pháp hook của Kernel non-GKI</string>
     <string name="image_editor_hint">Sử dụng hai ngón tay để phóng to hình ảnh và một ngón tay kéo thả để điều chỉnh vị trí</string>
     <string name="reprovision">Chọn lại</string>
     <!-- Kernel Flash Progress Related -->

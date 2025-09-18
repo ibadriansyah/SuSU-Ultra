@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">SukiSU Ultra</string>
+    <string name="app_name" translatable="false">SuSU Ultra</string>
     <string name="home">Головна</string>
     <string name="home_not_installed">Не встановлено</string>
     <string name="home_click_to_install">Натисніть, щоб встановити</string>
@@ -219,11 +219,11 @@
     <string name="kpm_control">Виконати</string>
     <string name="home_kpm_version">Версія KPM</string>
     <string name="close_notice">Закрити</string>
-    <string name="kernel_module_notice">Наступні функції модулів ядра були розроблені KernelPatch та модифіковані для включення функцій модулів ядра SukiSU Ultra</string>
-    <string name="home_ContributionCard_kernelsu">SukiSU Ultra з нетерпінням чекає</string>
+    <string name="kernel_module_notice">Наступні функції модулів ядра були розроблені KernelPatch та модифіковані для включення функцій модулів ядра SuSU Ultra</string>
+    <string name="home_ContributionCard_kernelsu">SuSU Ultra з нетерпінням чекає</string>
     <string name="kpm_control_success">Успішно</string>
     <string name="kpm_control_failed">Невдача</string>
-    <string name="home_click_to_ContributionCard_kernelsu">У майбутньому SukiSU Ultra буде відносно незалежною гілкою KSU, але ми все ще вдячні офіційному KernelSU, MKSU та іншим за їхній внесок!</string>
+    <string name="home_click_to_ContributionCard_kernelsu">У майбутньому SuSU Ultra буде відносно незалежною гілкою KSU, але ми все ще вдячні офіційному KernelSU, MKSU та іншим за їхній внесок!</string>
     <string name="not_supported">Не підтримується</string>
     <string name="supported">Підтримується</string>
     <string name="kernel_patched">Ядро не пропатчене</string>

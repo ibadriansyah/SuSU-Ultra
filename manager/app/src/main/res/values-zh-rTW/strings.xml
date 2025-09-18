@@ -219,11 +219,11 @@
     <string name="kpm_control">調參</string>
     <string name="home_kpm_version">KPM 版本</string>
     <string name="close_notice">關閉</string>
-    <string name="kernel_module_notice">以下內核模組功能由 KernelPatch 開發，經修改後加入 SukiSU Ultra 的內核模組功能</string>
-    <string name="home_ContributionCard_kernelsu">SukiSU Ultra 展望</string>
+    <string name="kernel_module_notice">以下內核模組功能由 KernelPatch 開發，經修改後加入 SuSU Ultra 的內核模組功能</string>
+    <string name="home_ContributionCard_kernelsu">SuSU Ultra 展望</string>
     <string name="kpm_control_success">成功</string>
     <string name="kpm_control_failed">錯誤</string>
-    <string name="home_click_to_ContributionCard_kernelsu">SukiSU Ultra 未來將成為一個相對獨立的 KSU 分支，但仍感謝官方 KernelSU 及 MKSU 等做出的貢獻</string>
+    <string name="home_click_to_ContributionCard_kernelsu">SuSU Ultra 未來將成為一個相對獨立的 KSU 分支，但仍感謝官方 KernelSU 及 MKSU 等做出的貢獻</string>
     <string name="not_supported">不支援</string>
     <string name="supported">支援</string>
     <string name="kernel_patched">內核未進行修補</string>

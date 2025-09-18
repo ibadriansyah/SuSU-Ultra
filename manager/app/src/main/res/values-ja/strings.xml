@@ -221,11 +221,11 @@
     <string name="kpm_control">実行</string>
     <string name="home_kpm_version">KPM バージョン</string>
     <string name="close_notice">閉じる</string>
-    <string name="kernel_module_notice">以下のカーネルモジュール関数は KernelPatch によって開発され、SukiSU Ultra のカーネルモジュール関数を含むように変更されました</string>
-    <string name="home_ContributionCard_kernelsu">SukiSU Ultra の今後にご期待ください</string>
+    <string name="kernel_module_notice">以下のカーネルモジュール関数は KernelPatch によって開発され、SuSU Ultra のカーネルモジュール関数を含むように変更されました</string>
+    <string name="home_ContributionCard_kernelsu">SuSU Ultra の今後にご期待ください</string>
     <string name="kpm_control_success">成功</string>
     <string name="kpm_control_failed">失敗</string>
-    <string name="home_click_to_ContributionCard_kernelsu">SukiSU Ultra は将来的に KSU から比較的に独立したブランチになりますが、公式の KernelSU や MKSU などの貢献に感謝しています！</string>
+    <string name="home_click_to_ContributionCard_kernelsu">SuSU Ultra は将来的に KSU から比較的に独立したブランチになりますが、公式の KernelSU や MKSU などの貢献に感謝しています！</string>
     <string name="not_supported">非対応</string>
     <string name="supported">対応</string>
     <string name="kernel_patched">カーネルはパッチされていません</string>

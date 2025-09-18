@@ -221,11 +221,11 @@
     <string name="kpm_control">Eksekusi</string>
     <string name="home_kpm_version">Versi KPM</string>
     <string name="close_notice">Tutup</string>
-    <string name="kernel_module_notice">Fungsi-fungsi modul kernel berikut dikembangkan oleh KernelPatch dan dimodifikasi untuk menyertakan fungsi modul kernel dari SukiSU Ultra</string>
-    <string name="home_ContributionCard_kernelsu">Antusias Untuk SukiSU Ultra</string>
+    <string name="kernel_module_notice">Fungsi-fungsi modul kernel berikut dikembangkan oleh KernelPatch dan dimodifikasi untuk menyertakan fungsi modul kernel dari SuSU Ultra</string>
+    <string name="home_ContributionCard_kernelsu">Antusias Untuk SuSU Ultra</string>
     <string name="kpm_control_success">Sukses</string>
     <string name="kpm_control_failed">Gagal</string>
-    <string name="home_click_to_ContributionCard_kernelsu">SukiSU Ultra akan menjadi cabang KSU yang relatif independen di masa mendatang, tetapi kami tetap menghargai KernelSU dan MKSU resmi dan sebagainya atas kontribusi mereka!</string>
+    <string name="home_click_to_ContributionCard_kernelsu">SuSU Ultra akan menjadi cabang KSU yang relatif independen di masa mendatang, tetapi kami tetap menghargai KernelSU dan MKSU resmi dan sebagainya atas kontribusi mereka!</string>
     <string name="not_supported">Tidak Mendukung</string>
     <string name="supported">Mendukung</string>
     <string name="kernel_patched">Kernel belum ditambal</string>
