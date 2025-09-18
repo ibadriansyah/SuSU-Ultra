@@ -22,24 +22,24 @@ jobs:
 
     - name: Decode Keystore
       run: |
-        echo "${{ secrets.SIGNING_KEY }}" | base64 -d > susuultra.jks
+        echo "${{ secrets.SUSU_ULTRA }}" | base64 -d > susuultra.jks
 
     - name: Build APK (Release)
       run: ./manager/gradlew assembleRelease \
         -Pandroid.injected.signing.store.file=susuultra.jks \
-        -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
-        -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
-        -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+        -Pandroid.injected.signing.store.password=${{ secrets.SUSU_KEY_PASSWORD }} \
+        -Pandroid.injected.signing.key.alias=${{ secrets.SUSU_KEY_ALIAS }} \
+        -Pandroid.injected.signing.key.password=${{ secrets.SUSU_KEY_PASSWORD_ALIAS }}
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: SuSU Ultra
-        path: app/build/outputs/apk/release/*.apk
+        name: SuSU-Ultra
+        path: manager/app/build/outputs/apk/release/*.apk
 
     - name: Extract signature hash & size
       run: |
-        APK_PATH=$(ls app/build/outputs/apk/release/*.apk | head -n 1)
+        APK_PATH=$(ls manager/app/build/outputs/apk/release/*.apk | head -n 1)
 
         echo "🔑 APK path: $APK_PATH"
 
