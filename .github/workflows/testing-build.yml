@@ -8,47 +8,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Setup JDK
-      uses: actions/setup-java@v4
-      with:
-        distribution: temurin
-        java-version: 17
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-    - name: Decode Keystore
-      run: |
-        echo "${{ secrets.SUSU_ULTRA }}" | base64 -d > susuultra.jks
+      - name: Decode Keystore
+        run: echo "${{ secrets.SUSU_ULTRA }}" | base64 -d > susuultra.jks
 
-    - name: Build APK (Release)
-      working-directory: ./manager
-      run: ./gradlew assembleRelease \
-        -Pandroid.injected.signing.store.file=../susuultra.jks \
-        -Pandroid.injected.signing.store.password=${{ secrets.SUSU_KEY_PASSWORD }} \
-        -Pandroid.injected.signing.key.alias=${{ secrets.SUSU_KEY_ALIAS }} \
-        -Pandroid.injected.signing.key.password=${{ secrets.SUSU_KEY_PASSWORD_ALIAS }}
+      - name: Build APK (Release)
+        working-directory: ./manager
+        run: ./gradlew assembleRelease -Pandroid.injected.signing.store.file=../susuultra.jks -Pandroid.injected.signing.store.password=${{ secrets.SUSU_KEYSTORE_PASSWORD }} -Pandroid.injected.signing.key.alias=${{ secrets.SUSU_KEY_ALIAS }} -Pandroid.injected.signing.key.password=${{ secrets.SUSU_KEY_PASSWORD }}
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: SuSU-Ultra
-        path: manager/app/build/outputs/apk/release/*.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SuSU-Ultra
+          path: manager/app/build/outputs/apk/release/*.apk
 
-    - name: Extract signature hash & size
-      run: |
-        APK_PATH=$(ls manager/app/build/outputs/apk/release/*.apk | head -n 1)
+      - name: Extract signature hash & size
+        run: |
+          APK_PATH=$(ls manager/app/build/outputs/apk/release/*.apk | head -n 1)
 
-        echo "🔑 APK path: $APK_PATH"
+          echo "🔑 APK path: $APK_PATH"
 
-        echo "== Signature Info =="
-        keytool -printcert -jarfile "$APK_PATH"
+          echo "== Signature Info =="
+          keytool -printcert -jarfile "$APK_PATH"
 
-        echo "== SHA256 Hash =="
-        keytool -printcert -jarfile "$APK_PATH" | grep "SHA256:" | awk '{print $2}'
+          echo "== SHA256 Hash =="
+          keytool -printcert -jarfile "$APK_PATH" | grep "SHA256:" | awk '{print $2}'
 
-        echo "== APK File Size (bytes) =="
-        stat -c%s "$APK_PATH"
+          echo "== APK File Size (bytes) =="
+          stat -c%s "$APK_PATH"
