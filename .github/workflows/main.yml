@@ -1,4 +1,4 @@
-name: Build KernelSU Manager
+name: Build SuSU Ultra Manager
 
 on:
   workflow_dispatch:
@@ -25,21 +25,24 @@ jobs:
         echo "${{ secrets.SIGNING_KEY }}" | base64 -d > susuultra.jks
 
     - name: Build APK (Release)
-      run: ./gradlew assembleRelease \
-        -Pandroid.injected.signing.store.file=my-release-key.jks \
-        -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
-        -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
-        -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+      run: |
+        cd manager
+        chmod +x gradlew
+        ./gradlew assembleRelease \
+          -Pandroid.injected.signing.store.file=../susuultra.jks \
+          -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
+          -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
+          -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: KernelSU-Manager
-        path: app/build/outputs/apk/release/*.apk
+        name: SuSU-Ultra Manager
+        path: manager/app/build/outputs/apk/release/*.apk
 
     - name: Extract signature hash & size
       run: |
-        APK_PATH=$(ls app/build/outputs/apk/release/*.apk | head -n 1)
+        APK_PATH=$(ls manager/app/build/outputs/apk/release/*.apk | head -n 1)
 
         echo "🔑 APK path: $APK_PATH"
 
