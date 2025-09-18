@@ -1,49 +1,59 @@
-name: Build SuSU Ultra Manager
+name: Build SuSU Manager
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
+    name: 🔧 Build & Sign APK
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - name: 🧹 Clean workspace
+      run: git clean -fdx
 
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+    - name: ☕ Setup JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 17
 
-      - name: Decode Keystore
-        run: echo "${{ secrets.SUSU_ULTRA }}" | base64 -d > susuultra.jks
+    - name: 📦 Setup Android SDK
+      uses: android-actions/setup-android@v3
 
-      - name: Build APK (Release)
-        working-directory: ./manager
-        run: ./gradlew assembleRelease -Pandroid.injected.signing.store.file=../susuultra.jks -Pandroid.injected.signing.store.password=${{ secrets.SUSU_KEYSTORE_PASSWORD }} -Pandroid.injected.signing.key.alias=${{ secrets.SUSU_KEY_ALIAS }} -Pandroid.injected.signing.key.password=${{ secrets.SUSU_KEY_PASSWORD }}
+    - name: 🔐 Decode Keystore
+      run: |
+        echo "${{ secrets.SUM_API_KEY }}" | base64 --decode > manager/my-release-key.jks
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: SuSU-Ultra
-          path: manager/app/build/outputs/apk/release/*.apk
+    - name: ⚙️ Build APK (Release)
+      working-directory: manager
+      run: |
+        ./gradlew clean assembleRelease \
+          -Pandroid.injected.signing.store.file=my-release-key.jks \
+          -Pandroid.injected.signing.store.password=${{ secrets.SUM_API_KEY_PASS }} \
+          -Pandroid.injected.signing.key.alias=${{ secrets.SUM_API_KEY_ALIAS }} \
+          -Pandroid.injected.signing.key.password=${{ secrets.SUM_API_KEY_PASS }}
 
-      - name: Extract signature hash & size
-        run: |
-          APK_PATH=$(ls manager/app/build/outputs/apk/release/*.apk | head -n 1)
+    - name: 📤 Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: SuSU Ultra
+        path: manager/app/build/outputs/apk/release/*.apk
 
-          echo "🔑 APK path: $APK_PATH"
+    - name: 🔎 Inspect APK Signature & Size
+      run: |
+        APK_PATH=$(ls manager/app/build/outputs/apk/release/*.apk | head -n 1)
+        echo "🔑 APK path: $APK_PATH"
 
-          echo "== Signature Info =="
-          keytool -printcert -jarfile "$APK_PATH"
+        echo "== Signature Info =="
+        keytool -printcert -jarfile "$APK_PATH" || echo "Keytool failed"
 
-          echo "== SHA256 Hash =="
-          keytool -printcert -jarfile "$APK_PATH" | grep "SHA256:" | awk '{print $2}'
+        echo "== SHA256 Hash =="
+        keytool -printcert -jarfile "$APK_PATH" | grep "SHA256:" | awk '{print $2}' || echo "SHA256 not found"
 
-          echo "== APK File Size (bytes) =="
-          stat -c%s "$APK_PATH"
+        echo "== APK File Size (bytes) =="
+        stat -c%s "$APK_PATH" || stat -f%z "$APK_PATH"
