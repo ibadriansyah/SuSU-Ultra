@@ -1,0 +1,53 @@
+name: Build KernelSU Manager
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Setup JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 17
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Decode Keystore
+      run: |
+        echo "${{ secrets.SIGNING_KEY }}" | base64 -d > susuultra.jks
+
+    - name: Build APK (Release)
+      run: ./gradlew assembleRelease \
+        -Pandroid.injected.signing.store.file=my-release-key.jks \
+        -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
+        -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
+        -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: KernelSU-Manager
+        path: app/build/outputs/apk/release/*.apk
+
+    - name: Extract signature hash & size
+      run: |
+        APK_PATH=$(ls app/build/outputs/apk/release/*.apk | head -n 1)
+
+        echo "🔑 APK path: $APK_PATH"
+
+        echo "== Signature Info =="
+        keytool -printcert -jarfile "$APK_PATH"
+
+        echo "== SHA256 Hash =="
+        keytool -printcert -jarfile "$APK_PATH" | grep "SHA256:" | awk '{print $2}'
+
+        echo "== APK File Size (bytes) =="
+        stat -c%s "$APK_PATH"
