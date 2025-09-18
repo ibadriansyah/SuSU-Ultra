@@ -1,4 +1,4 @@
-name: Build KernelSU Manager
+name: Build SuSU Ultra Manager
 
 on:
   workflow_dispatch:
@@ -25,8 +25,9 @@ jobs:
         echo "${{ secrets.SUSU_ULTRA }}" | base64 -d > susuultra.jks
 
     - name: Build APK (Release)
-      run: ./manager/gradlew assembleRelease \
-        -Pandroid.injected.signing.store.file=susuultra.jks \
+      working-directory: ./manager
+      run: ./gradlew assembleRelease \
+        -Pandroid.injected.signing.store.file=../susuultra.jks \
         -Pandroid.injected.signing.store.password=${{ secrets.SUSU_KEY_PASSWORD }} \
         -Pandroid.injected.signing.key.alias=${{ secrets.SUSU_KEY_ALIAS }} \
         -Pandroid.injected.signing.key.password=${{ secrets.SUSU_KEY_PASSWORD_ALIAS }}
