@@ -1,59 +1,66 @@
-name: Build SuSU Manager
+name: Build KernelSU Manager
 
 on:
   workflow_dispatch:
+    inputs:
+      target_commit: 8657de8
+        description: 'Commit SHA to build'
+        required: false
+        default: ''
+        type: string
 
 jobs:
   build:
-    name: 🔧 Build & Sign APK
     runs-on: ubuntu-latest
-    timeout-minutes: 15
 
     steps:
-    - name: 🧹 Clean workspace
-      run: git clean -fdx
-
-    - name: 📥 Checkout repository
+    - name: Checkout repo
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # penting agar bisa checkout commit lama
 
-    - name: ☕ Setup JDK 17
+    - name: Checkout specific commit (if provided)
+      if: ${{ inputs.target_commit != '' }}
+      run: |
+        git checkout ${{ inputs.target_commit }}
+
+    - name: Setup JDK
       uses: actions/setup-java@v4
       with:
         distribution: temurin
         java-version: 17
 
-    - name: 📦 Setup Android SDK
+    - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: 🔐 Decode Keystore
+    - name: Decode Keystore
       run: |
-        echo "${{ secrets.SUM_API_KEY }}" | base64 --decode > manager/my-release-key.jks
+        echo "${{ secrets.SIGNING_KEY }}" | base64 --decode > my-release-key.jks
 
-    - name: ⚙️ Build APK (Release)
-      working-directory: manager
-      run: |
-        ./gradlew clean assembleRelease \
-          -Pandroid.injected.signing.store.file=my-release-key.jks \
-          -Pandroid.injected.signing.store.password=${{ secrets.SUM_API_KEY_PASS }} \
-          -Pandroid.injected.signing.key.alias=${{ secrets.SUM_API_KEY_ALIAS }} \
-          -Pandroid.injected.signing.key.password=${{ secrets.SUM_API_KEY_PASS }}
+    - name: Build APK (Release)
+      run: ./gradlew assembleRelease \
+        -Pandroid.injected.signing.store.file=my-release-key.jks \
+        -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
+        -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
+        -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
-    - name: 📤 Upload APK Artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: SuSU Ultra
-        path: manager/app/build/outputs/apk/release/*.apk
+        name: KernelSU-Manager
+        path: app/build/outputs/apk/release/*.apk
 
-    - name: 🔎 Inspect APK Signature & Size
+    - name: Extract signature hash & size
       run: |
-        APK_PATH=$(ls manager/app/build/outputs/apk/release/*.apk | head -n 1)
+        APK_PATH=$(ls app/build/outputs/apk/release/*.apk | head -n 1)
+
         echo "🔑 APK path: $APK_PATH"
 
         echo "== Signature Info =="
-        keytool -printcert -jarfile "$APK_PATH" || echo "Keytool failed"
+        keytool -printcert -jarfile "$APK_PATH"
 
         echo "== SHA256 Hash =="
-        keytool -printcert -jarfile "$APK_PATH" | grep "SHA256:" | awk '{print $2}' || echo "SHA256 not found"
+        keytool -printcert -jarfile "$APK_PATH" | grep "SHA256:" | awk '{print $2}'
 
         echo "== APK File Size (bytes) =="
         stat -c%s "$APK_PATH" || stat -f%z "$APK_PATH"
